@@ -99,10 +99,12 @@ public class MainActivity extends AppCompatActivity {
 
 
                 String[] lists = new String[testList.getPlaylists().size()];
+                //String[] lists1 = new String[testList.g];
 
 
                 for (int i = 0; i < testList.getPlaylists().size(); i++){
                     lists[i] = (testList.getPlaylists().get(i).getPlaylistname());
+                   // lists[i] = String.valueOf((testList.getPlaylists().get(i).tracks.getSongs()));
 
                     Log.d("playlistname", testList.getPlaylists().get(i).getPlaylistname());
                 }
