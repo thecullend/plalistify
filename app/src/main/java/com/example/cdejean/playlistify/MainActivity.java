@@ -57,21 +57,21 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         Api api = retrofit.create(Api.class);
-        Call <List<playlists>> call = api.getLists();
-        call.enqueue(new Callback<List<playlists>>() {
+        Call<music> call = api.getLists();
+        call.enqueue(new Callback<music>() {
             @Override
-            public void onResponse(Call<List<playlists>> call, Response<List<playlists>> response) {
-                List<playlists> playlists = response.body();
+            public void onResponse(Call<music> call, Response<music> response) {
+                music playlists = response.body();
 
-                for(playlists p: playlists){
-                    Log.d("playlists", p.getPlaylists());
-                    Log.d("playlistname", p.getPlaylistname());
-                    Log.d("image", p.getImage());
+                if (playlists != null){
+                    //Log.d("playlists", playlists.getPlaylists())
+                    Log.d("playlistname", playlists.getStatusCode());
+                    
                 }
             }
 
             @Override
-            public void onFailure(Call<List<playlists>> call, Throwable t) {
+            public void onFailure(Call<music> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(),Toast.LENGTH_SHORT).show();
 
             }
