@@ -20,7 +20,23 @@ public class tracks {
         return total;
     }
 
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public void setSongs(List<song> songs) {
+        this.songs = songs;
+    }
+
     public List<song> getSongs() {
         return songs;
+    }
+
+
+    @Override
+    public String toString() {
+        return "tracks{" +
+                "total=" + total +
+                '}';
     }
 }

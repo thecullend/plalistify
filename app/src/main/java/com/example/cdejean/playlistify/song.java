@@ -22,4 +22,20 @@ public class song {
     public String getName() {
         return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    @Override
+    public String toString() {
+        return "song{" +
+                "name='" + name + '\'' +
+                ", artist='" + artist + '\'' +
+                '}';
+    }
 }

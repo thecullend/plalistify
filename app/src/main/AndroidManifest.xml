@@ -42,7 +42,6 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".PlaylistsActivity"></activity>
     </application>
 
 </manifest>

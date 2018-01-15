@@ -22,6 +22,17 @@ public class playlists {
     }
 
 
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public com.example.cdejean.playlistify.tracks getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(com.example.cdejean.playlistify.tracks tracks) {
+        this.tracks = tracks;
+    }
 
     public String getImage() {
         return image;
@@ -29,5 +40,12 @@ public class playlists {
 
     public String getPlaylistname() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "playlists{"  +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

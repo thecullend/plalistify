@@ -12,6 +12,8 @@ import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
 import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -34,8 +36,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import com.example.cdejean.playlistify.tracks;
+import com.example.cdejean.playlistify.*;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    ListView listView;
 
 
     //private LambdaApiClient apiClient;
@@ -50,32 +57,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        listView = (ListView) findViewById(R.id.listViewPlaylists);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Api.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        getSpotipy();
 
-        Api api = retrofit.create(Api.class);
-        Call<music> call = api.getLists();
-        call.enqueue(new Callback<music>() {
-            @Override
-            public void onResponse(Call<music> call, Response<music> response) {
-                music playlists = response.body();
-
-                if (playlists != null){
-                    //Log.d("playlists", playlists.getPlaylists())
-                    Log.d("playlistname", playlists.getStatusCode());
-                    
-                }
-            }
-
-            @Override
-            public void onFailure(Call<music> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(),Toast.LENGTH_SHORT).show();
-
-            }
-        });
 
         AWSMobileClient.getInstance().initialize(this).execute();
 
@@ -92,15 +77,52 @@ public class MainActivity extends AppCompatActivity {
         // Stop the session and submit the default app started event
         pinpointManager.getSessionClient().stopSession();
         pinpointManager.getAnalyticsClient().submitEvents();
-
+    }
 
         // Create the client
        /* apiClient = new ApiClientFactory()
                 .credentialsProvider(AWSMobileClient.getInstance().getCredentialsProvider())
                 .build(LambdaApiClient.class); */
 
+        private void getSpotipy() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Api.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        Api api = retrofit.create(Api.class);
+        Call<music> call = api.getLists();
+        call.enqueue(new Callback<music>() {
+            @Override
+            public void onResponse(Call<music> call, Response<music> response) {
+                music testList = response.body();
+
+
+                String[] lists = new String[testList.getPlaylists().size()];
+
+
+                for (int i = 0; i < testList.getPlaylists().size(); i++){
+                    lists[i] = (testList.getPlaylists().get(i).getPlaylistname());
+
+                    Log.d("playlistname", testList.getPlaylists().get(i).getPlaylistname());
+                }
+
+
+                listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, lists));
+            }
+
+            @Override
+            public void onFailure(Call<music> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
 
     }
+
+
 
 
   /*  public MainActivity() {
